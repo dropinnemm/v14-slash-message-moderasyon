@@ -16,46 +16,6 @@ module.exports = async (client) => {
         const index = Math.floor(Math.random() * (oynuyor.length));
         client.user.setPresence({activities: [{ name: oynuyor[index], type: 5  }],status: 'dnd'})
         },5000)
-
-
-        setInterval(() => { kayıtsızverme(); }, 1000);
-        setInterval(() => { TagAlıncaKontrol(); }, 1000);
-        setInterval(() => { TagBırakanKontrol(); }, 1000);
-        async function kayıtsızverme()  { 
-
-            const guild = client.guilds.cache.get(settings.GuildId);
-            let undefinable = guild.members.cache.filter(m => m.roles.cache.filter(r => r.id !== guild.id).size == 0)
-            undefinable.forEach(r => {
-               r.roles.add(rol.UnRegRoles)
-               })
-             
-            };
-
-        async function TagAlıncaKontrol() { 
-                const guild = client.guilds.cache.get(settings.GuildId)
-                const members = [...guild.members.cache.filter(member => 
-                    member.user.tag.includes(settings.tag) && 
-                    !member.roles.cache.has(rol.roller.JailRole) && 
-                    !member.roles.cache.has(rol.Taglı)).values()].splice(0, 10)
-                for await (const member of members) {
-                await member.roles.add(rol.Taglı);
-                }
-            };
-
-        async function TagBırakanKontrol() { 
-            let data = await registerData.findOne({ guildID: settings.GuildId })
-            if(data.tagMode === true) {
-                const guild = client.guilds.cache.get(settings.GuildId)
-                const memberss = [...guild.members.cache.filter(member => 
-                    !member.user.tag.includes(settings.tag) && member.roles.cache.has(rol.Taglı)).values()].splice(0, 10)
-                for await (const member of memberss) {
-                 await member.roles.remove(rol.Taglı)
-                }
-
-            }}}
-            
-            
-    )
 setInterval(async () => {  
   const guild = client.guilds.cache.get(settings.GuildId);
   if (!guild) return;
@@ -121,5 +81,6 @@ setInterval(async () => {
 }, 750);
 
 
-        }
+        })
+      }
     
